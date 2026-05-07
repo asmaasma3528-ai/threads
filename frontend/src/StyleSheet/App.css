@@ -1,0 +1,134 @@
+/* App.css */
+.container {
+  padding: 20px 40px; /* Reduced top padding */
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+  /* Ensure no overflow hidden here */
+  display: block; 
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 20px;
+}
+
+.header h1 {
+  letter-spacing: 5px;
+  margin-bottom: 5px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.image-placeholder {
+  height: 200px;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.info {
+  padding: 20px;
+}
+
+.name {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.category {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.add-btn {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-btn:hover {
+  background-color: #555;
+}
+/* The Square Wrapper */
+.carousel-container {
+  width: 320px;           
+  height: 320px;          
+  position: relative;
+  margin: 20px auto;      
+  overflow: hidden;
+  border-radius: 4px;      /* Flipkart style sharp-ish corners */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background: #fff;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;                /* Fills the square */
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 10;
+}
+
+.slide-content h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #212121;
+}
+
+.slide-icon {
+  font-size: 100px;        /* Big bold icon for the square ad */
+  margin-bottom: 10px;
+}
