@@ -132,3 +132,49 @@
   font-size: 100px;        /* Big bold icon for the square ad */
   margin-bottom: 10px;
 }
+
+/* 1. Remove the gap from the main container for this section */
+.container {
+  padding: 0; /* Remove padding so banner can touch edges if needed */
+  background-color: #f4f4f4;
+}
+
+/* 2. Make the Viewport occupy 95% without internal gaps */
+.carousel-view {
+  width: 95%;              
+  height: 350px;           
+  margin: 10px auto;       /* Small vertical margin, centered horizontally */
+  overflow: hidden;        
+  border-radius: 8px;
+  cursor: pointer;         /* Shows it's clickable */
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  /* If you want to avoid the "snap back" look, 
+     we use 'transform' with a smooth timing function */
+  transition: transform 0.6s ease-in-out; 
+}
+
+.slide-item {
+  min-width: 100%;         
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0;              /* Removed internal padding to fill space */
+  flex-shrink: 0;
+  border: none;            /* Ensure no borders causing gaps */
+}
+
+.slide-content {
+  text-align: left;
+  padding-left: 5%;        /* Slight offset for text */
+}
+
+.slide-icon {
+  font-size: 150px;        /* Larger icon to fill the square/rect area */
+  padding-right: 5%;
+}

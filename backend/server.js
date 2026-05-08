@@ -7,6 +7,7 @@ import products from "./models/ProductModel.js";
 import Banner from "./models/BannerModel.js";
 import productRouter from "./routes/ProductRoute.js";
 import BannerRoute from "./routes/BannerRoute.js";
+import userRouter from "./routes/UserRouter.js";
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
   res.send("API is working!!");
 });
 
+app.use("/api/auth", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/banners", BannerRoute);
 

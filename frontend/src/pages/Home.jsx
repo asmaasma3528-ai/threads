@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../StyleSheet/Home.css";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [banner, setBanner] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
 
   // 1. Fetching Data
   useEffect(() => {
@@ -22,62 +24,84 @@ const Home = () => {
     fetchData();
   }, []);
 
-  // 2. Auto-sliding Logic
   useEffect(() => {
-  if(banner.length === 0) return;
-      const timer = setInterval(() => {
-        setCurrentSlide((prev) => ( prev + 1) % banner.length);
-      }, 3000);
-      return () => clearInterval(timer);
-    
-  }, [banner.length]);
+    if(banner.length === 0) return;
+    const timer = setInterval(() => {
+      handleNext();
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [banner.length, currentSlide]);
 
-  return (
+   const handleNext = () => {
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => prev+1);
+   };
+
+   useEffect(() => {
+    if(currentSlide === banner.length){
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentSlide(0);
+      }, 600);
+    }
+   }, [currentSlide, banner.length]);
+
+  return(
     <div className="container">
-      {/* Banner Section */}
       {banner.length > 0 ? (
-        <div className="carousel-container">
-          {banner.map((slide, index) => (
-            <div 
-              key={slide.id} 
-              className={`slide ${index === currentSlide ? 'active' : ''}`} 
-              style={{ backgroundColor: slide.bgColor }}
-            >
-              <div className="slide-content">
-                <h2>{slide.title}</h2>
-                <p>{slide.subtitle}</p>
-                <button className="shop-now">Explore Now</button>
-              </div>
-              <div className="slide-icon">{slide.imageIcon}</div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="loading-banner">Loading seasonal offers...</div>
-      )}
+        <div className="carousel-view">
+          <div
+          className="carousel-track"
+          style={{transform:`translateX(-${currentSlide * 100}%)`,
+         transition: isTransitioning ? 'transform 0.6s ease-in-out' : 'none'
+        }}
+          >
+            {banner.map((slide, index) => (
+              <div key = {slide.id}
+              className="slide-item"
+              style={{backgroundColor:slide.bgColor}}
+              onClick={() => window.location.href = `/offers/${slide.id}`}
+              >
 
-      {/* Product Grid Section */}
-      <header className="header">
-        <h1>THREADS COLLECTION</h1>
-      </header>
-      
-      <div className="product-grid">
-        {products.length > 0 ? (
-          products.map((product) => (
-            <div key={product.id} className="card">
-               <div className="info">
-                <h3 className="name">{product.name}</h3>
-                <p className="price">₹{product.price}</p>
-                <button className="add-btn">Add to Cart</button>
-              </div>
+                <div className="slide-content">
+                  <h2>{banner[0].title}</h2>
+                  <p>{banner[0].subtitle}</p>
+                  
+                  </div>
+                  <div className="slide-icon">{banner[0].imageIcon}</div>
+                  </div>
+            ))}
+          </div>
+          </div>
+      ) : (
+        <div className="loading-banner">
+          Loading Seasonal Offers...</div>
+      )
+    }
+
+    <header className="header">
+      <h1>THREADS COLLECTION</h1>
+    </header>
+
+    <div className="product-grid">
+      {products.length > 0 ? (products.map((product) => (
+        <div key={product.id} className="card">
+          <div className="info">
+            <h3 className="name">
+              {product.name}
+            </h3>
+            <p className="price">₹{product.price}</p>
+            <button className="add-btn">Add to Cart</button>
             </div>
-          ))
-        ) : (
-          <p>No products found.</p>
-        )}
-      </div>
+            </div>
+      ))
+    ) : (
+      <p>No products found.</p>
+    )
+  }
     </div>
-  );
+    </div>
+  )
 };
 
 export default Home;
